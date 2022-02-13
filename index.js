@@ -4,17 +4,25 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-mongoose.connect('mongodb+srv://<username>:<password>@test.cxtzp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+const {User} = require('./model/user');
+
+mongoose.connect('mongodb+srv://haemil:password@test.cxtzp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
     {useNewUrlParser: true})
     .then(() => console.log('DB connected'))
-    .catch(error => console.error(error));
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+    .catch(err => console.error(err));
 
 app.use(bodyParser.urlencoded({extend: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.post('/api/users/register', (req, res) => {
+    const user = new User(req.body);
+    user.save((err, userData) => {
+        if(err){
+            return res.json({success: false, err});
+        }
+        return res.status(200).json({success: true});
+    });
+});
 
 app.listen(3000);
