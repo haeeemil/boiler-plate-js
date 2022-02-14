@@ -4,7 +4,8 @@
   "description": "react blog",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "backend": "nodemon index.js"
   },
   "author": "haemil",
   "license": "ISC",
@@ -13,5 +14,8 @@
     "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
     "mongoose": "^6.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }

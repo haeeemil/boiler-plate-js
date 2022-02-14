@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+const config = require('./config/key');
+
 const {User} = require('./model/user');
 
-mongoose.connect('mongodb+srv://haemil:password@test.cxtzp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+mongoose.connect(config.mongoURI,
     {useNewUrlParser: true})
     .then(() => console.log('DB connected'))
     .catch(err => console.error(err));
@@ -14,6 +16,10 @@ mongoose.connect('mongodb+srv://haemil:password@test.cxtzp.mongodb.net/myFirstDa
 app.use(bodyParser.urlencoded({extend: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+app.get('/', (req, res) => {
+    res.json({"hello ~": "Hi ~~~ "})
+})
 
 app.post('/api/users/register', (req, res) => {
     const user = new User(req.body);
